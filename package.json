@@ -1,0 +1,27 @@
+{
+  "name": "do-ajax",
+  "version": "0.5.0",
+  "description": "A light weight tool for doing ajax request for json data",
+  "main": "doAjax.js",
+  "scripts": {
+    "test": "\"node test.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcorns/do-ajax.git"
+  },
+  "keywords": [
+    "ajax",
+    "json"
+  ],
+  "author": {
+    "email": "codefellow@gmail.com",
+    "name": "Dale Corns",
+    "url": "http://www.dalecorns.com/"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcorns/do-ajax/issues"
+  },
+  "homepage": "https://github.com/dcorns/do-ajax#readme"
+}
