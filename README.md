@@ -1,14 +1,14 @@
-#doAjax
+#do-ajax
 A lightweight tool for consuming json data with ajax requests
 
 ## Getting Started
 
 ```shell
-npm install doAjax --save
+npm install do-ajax --save
 ```
 
 ### Overview
-In your project file `var doAjax = require('doAjax');`.
+In your project file `var doAjax = require('do-ajax');`.
 Use a tool like [Browerify](http://browserify.org/) or [Webpack](https://webpack.github.io/) to require in your client side scripts.
 All functions expect a 200 HTTP response from the server to be considered a successful transaction except *ajaxPostJson* which requires a 200 or 201 response. You can still accept data sent with other response codes but it will be returned in the first parameter of the call back rather than the second. And since it is returned as the first argument, the data will be response text will be found as a property of the rawAjaxRequest object. This functionality is included primarily so you can handle response codes that are supposed to indicate problems, but do not throw an error. A supplemental error object is returned as the first argument in the callback from all methods when the server throws an error. The XMLHttpRequestProgressEvent object is also logged to the console.
 
