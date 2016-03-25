@@ -97,6 +97,7 @@
 	 * doAjax
 	 * Created by dcorns on 1/9/16
 	 * Copyright © 2016 Dale Corns
+	 * version 2.0.0 March 2016
 	 */
 	'use strict';
 	module.exports = function(){
@@ -104,17 +105,18 @@
 	    ajaxGet: function ajaxGet(url, cb, token){
 	      var ajaxReq = new XMLHttpRequest();
 	      ajaxReq.addEventListener('load', function(){
-	        if(ajaxReq.status === 200) cb(null, ajaxReq.responseText);
-	        else cb(JSON.parse(ajaxReq.responseText), null);
+	        if(ajaxReq.status === 200) cb(null, {responseText: ajaxReq.responseText, rawAjaxRequest: ajaxReq});
+	        else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
 	      });
 	      ajaxReq.addEventListener('error', function(data){
 	        console.dir(ajaxReq);
 	        console.dir(data);
-	        cb({XMLHttpRequestError: 'A fatal error occurred, see console for more information'}, null);
+	        var err = new Error('A fatal error occurred during ajaxGet, see console for more information');
+	        err.name = 'XMLHttpRequestError';
+	        cb(err, null);
 	      });
 
 	      ajaxReq.open('GET', url, true);
-	      //ajaxReq.setRequestHeader('Content-Type', 'application/json');
 	      if(token){
 	        ajaxReq.setRequestHeader('Authorization', token);
 	      }
@@ -124,13 +126,15 @@
 	    ajaxGetJson: function ajaxGetJson(url, cb, token){
 	      var ajaxReq = new XMLHttpRequest();
 	      ajaxReq.addEventListener('load', function(){
-	        if(ajaxReq.status === 200) cb(null, JSON.parse(ajaxReq.responseText));
-	        else cb(JSON.parse(ajaxReq.responseText), null);
+	        if(ajaxReq.status === 200) cb(null, {json: JSON.parse(ajaxReq.responseText), rawAjaxRequest: ajaxReq});
+	        else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
 	      });
 	      ajaxReq.addEventListener('error', function(data){
 	        console.dir(ajaxReq);
 	        console.dir(data);
-	        cb({XMLHttpRequestError: 'A fatal error occurred, see console for more information'}, null);
+	        var err = new Error('A fatal error occurred during ajaxGetJson, see console for more information');
+	        err.name = 'XMLHttpRequestError';
+	        cb(err, null);
 	      });
 
 	//Must open before setting request header, so this order is required
@@ -144,13 +148,15 @@
 	    ajaxPostJson: function ajaxPostJson(url, jsonData, cb, token){
 	      var ajaxReq = new XMLHttpRequest();
 	      ajaxReq.addEventListener('load', function(){
-	        if(ajaxReq.status === 201) cb(null, JSON.parse(ajaxReq.responseText));
-	        else cb(JSON.parse(ajaxReq.responseText), null);
+	        if(ajaxReq.status === 201 || ajaxReq.status === 200) cb(null, {json: JSON.parse(ajaxReq.responseText), rawAjaxRequest: ajaxReq});
+	        else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
 	      });
 	      ajaxReq.addEventListener('error', function(data){
 	        console.dir(ajaxReq);
 	        console.dir(data);
-	        cb({XMLHttpRequestError: 'A fatal error occurred, see console for more information'}, null);
+	        var err = new Error('A fatal error occurred during ajaxPostJson, see console for more information');
+	        err.name = 'XMLHttpRequestError';
+	        cb(err, null);
 	      });
 
 	//Must open before setting request header, so this order is required
@@ -165,10 +171,14 @@
 	      var ajaxReq = new XMLHttpRequest();
 	      ajaxReq.addEventListener('load', function(){
 	        if(ajaxReq.status === 200) cb(null, JSON.parse(ajaxReq.responseText));
-	        else cb(JSON.parse(ajaxReq.responseText), null);
+	        else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
 	      });
 	      ajaxReq.addEventListener('error', function(data){
-	        cb({XMLHttpRequestError: 'A fatal error occurred, see console for more information'}, null);
+	        console.dir(ajaxReq);
+	        console.dir(data);
+	        var err = new Error('A fatal error occurred during ajaxPostJson, see console for more information');
+	        err.name = 'XMLHttpRequestError';
+	        cb(err, null);
 	      });
 
 	//Must open before setting request header, so this order is required
