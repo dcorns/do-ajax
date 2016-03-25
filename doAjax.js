@@ -14,7 +14,6 @@ module.exports = function(){
         else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
       });
       ajaxReq.addEventListener('error', function(data){
-        console.dir(ajaxReq);
         console.dir(data);
         var err = new Error('A fatal error occurred during ajaxGet, see console for more information');
         err.name = 'XMLHttpRequestError';
@@ -35,7 +34,6 @@ module.exports = function(){
         else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
       });
       ajaxReq.addEventListener('error', function(data){
-        console.dir(ajaxReq);
         console.dir(data);
         var err = new Error('A fatal error occurred during ajaxGetJson, see console for more information');
         err.name = 'XMLHttpRequestError';
@@ -57,7 +55,6 @@ module.exports = function(){
         else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
       });
       ajaxReq.addEventListener('error', function(data){
-        console.dir(ajaxReq);
         console.dir(data);
         var err = new Error('A fatal error occurred during ajaxPostJson, see console for more information');
         err.name = 'XMLHttpRequestError';
@@ -75,13 +72,12 @@ module.exports = function(){
     ajaxPutJson: function(url, jsonData, cb, token){
       var ajaxReq = new XMLHttpRequest();
       ajaxReq.addEventListener('load', function(){
-        if(ajaxReq.status === 200) cb(null, JSON.parse(ajaxReq.responseText));
+        if(ajaxReq.status === 200) cb(null, {json: JSON.parse(ajaxReq.responseText), rawAjaxRequest: ajaxReq});
         else cb({statusCode: ajaxReq.status, rawAjaxRequest: ajaxReq}, null);
       });
       ajaxReq.addEventListener('error', function(data){
-        console.dir(ajaxReq);
         console.dir(data);
-        var err = new Error('A fatal error occurred during ajaxPostJson, see console for more information');
+        var err = new Error('A fatal error occurred during ajaxPutJson, see console for more information');
         err.name = 'XMLHttpRequestError';
         cb(err, null);
       });
